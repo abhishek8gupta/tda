@@ -8,6 +8,15 @@
  const router = express.Router();
  const passport = require("passport");
  const querystring = require("querystring");
+
+//  const config = {
+//     authRequired: false,
+//     auth0Logout: true,
+//     secret: 'a long, randomly-generated string stored in env',
+//     baseURL: 'http://localhost:3000',
+//     clientID: 'zSFrPlgRnqix6WphReXGrufwSi8hFmS1',
+//     issuerBaseURL: 'https://soft-queen-2698.us.auth0.com'
+//   };
  
  require("dotenv").config();
 
@@ -67,7 +76,7 @@
       returnTo: returnTo
     });
     logoutURL.search = searchString;
-  
+    console.log("logoutURL -> " + logoutURL)
     res.redirect(logoutURL);
   });
 

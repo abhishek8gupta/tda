@@ -142,7 +142,8 @@ a {
 }
 
 .WelcomeView {
-    background: url("https://thestack.technology/wp-content/uploads/2021/05/ai-solutions-neural-networks.jpg") left bottom;
+    /* background: url("https://thestack.technology/wp-content/uploads/2021/05/ai-solutions-neural-networks.jpg") left bottom; */
+    background: url("images/ai-solutions-neural-networks.jpeg") left bottom;
     background-size: cover;
 }
 
@@ -150,4 +151,5 @@ a {
     background: url("https://cdn.auth0.com/blog/whatabyte-portal/patio.jpeg") left
       bottom;
     background-size: cover;
+    background-color:burlywood;
 }

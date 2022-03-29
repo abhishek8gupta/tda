@@ -5,6 +5,7 @@
  */
 const express = require("express");
 const path = require("path");
+var helmet = require('helmet');
 
 // auth0
 const expressSession = require("express-session");
@@ -19,8 +20,21 @@ const authRouter = require("./auth");
  * App Variables
  */
 const app = express();
-const port = process.env.PORT || "8000";
+var callbackurl;
+var port;
 
+// if (process.env.NODE_ENV === "production") {
+//   port = process.env.APP_PORT || "8000";
+//   callbackurl = process.env.BASE_URL_PROD + ":" + port + process.env.AUTH0_CALLBACK_URI;
+// }else{
+//   port = process.env.APP_DEV_PORT || "8000";
+//   // callbackurl = process.env.BASE_URL_DEV + ":" + port + process.env.AUTH0_CALLBACK_URI;
+//   callbackurl = process.env.BASE_URL_DEV + process.env.AUTH0_CALLBACK_URI;
+// }
+port = process.env.PORT || "8000";
+callbackurl = process.env.AUTH0_CALLBACK_URL
+
+console.log("callback url : " + callbackurl)
 /**
  * Session Configuration (New!)
  */
@@ -32,7 +46,7 @@ const port = process.env.PORT || "8000";
   saveUninitialized: false
 };
 
-if (app.get("env") === "production") {
+if (process.env.NODE_ENV === "production") {
   // Serve secure cookies, requires HTTPS
   session.cookie.secure = true;
 }
@@ -46,7 +60,7 @@ if (app.get("env") === "production") {
     domain: process.env.AUTH0_DOMAIN,
     clientID: process.env.AUTH0_CLIENT_ID,
     clientSecret: process.env.AUTH0_CLIENT_SECRET,
-    callbackURL: process.env.AUTH0_CALLBACK_URL
+    callbackURL: callbackurl
   },
   function(accessToken, refreshToken, extraParams, profile, done) {
     /**
@@ -70,11 +84,14 @@ if (app.get("env") === "production") {
  app.set("views", path.join(__dirname, "views"));
  app.set("view engine", "pug");
  app.use(express.static(path.join(__dirname, "public")));
+ app.set("trust proxy", 1);
 
  app.use(expressSession(session));
  passport.use(strategy);
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(helmet());
+
 
 passport.serializeUser((user, done) => {
   done(null, user);

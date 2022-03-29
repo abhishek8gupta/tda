@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./index.js",
+    "start": "NODE_ENV=production node ./index.js",
+    "prod": "NODE_ENV=production node ./index.js",
     "ui": "browser-sync start --config bs-config.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "aaaa",
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.27.9",
@@ -18,8 +20,13 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-session": "^1.17.2",
+    "helmet": "^5.0.2",
+    "nodemon": "^2.0.7",
     "passport": "^0.5.2",
     "passport-auth0": "^1.4.2",
     "pug": "^3.0.2"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }
